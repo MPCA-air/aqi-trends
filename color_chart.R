@@ -22,14 +22,15 @@ aqi <- read_csv("time, aqi
                 12, 108
                 13, 158
                 14, 260
-                15, NaN")
+                15, 360
+                16, NaN")
 
-aqi_refs <- data.frame(xstart = seq(0,250,50), 
-                       xend = seq(50,300,50), 
-                       col = c("green", "yellow", "orange", "red", "purple", "violet"), 
+aqi_refs <- data.frame(xstart = c(seq(0,150,50), 200, 300),
+                       xend = c(seq(50,200,50), 300, 500),
+                       col = c("#53BF33", "#F4C60B", "#DB6B1A", "#ff101f", "#52154E", "#4c061d"), 
                        stringsAsFactors = F)
 
-aqi_refs$col <- factor(aqi_refs$col, ordered = T, levels = c("green", "yellow", "orange", "red", "purple", "violet"))
+aqi_refs$col <- factor(aqi_refs$col, ordered = T, levels = aqi_refs$col)
 
 
 aqi2 <- aqi
@@ -47,7 +48,7 @@ for(z in 1:25) {
 p <- ggplot() +
   geom_rect(data = aqi_refs, aes(ymin = xstart, ymax = xend, 
                                  xmin = min(aqi2$time, na.rm=T), xmax = max(aqi2$time, na.rm=T), 
-                                 fill = col), alpha = 0.4) 
+                                 fill = col), alpha = 0.8) 
 
 if(z==24) { p <- p +
   geom_point(data = aqi_new, aes(x = time, y = aqi), color = "grey50", size = 5.7) +
@@ -86,9 +87,9 @@ p <- p +
   guides(fill = "none") +
   scale_fill_manual(values = as.character(aqi_refs$col)) +
   labs(x = "Time", y = "", subtitle = "Air Quality Index") +
-  ylim(c(0, min(seq(150, 300, 50)[seq(150, 300, 50) >= max(aqi2$aqi, na.rm=T)]))) +
+  ylim(c(0, min(c(seq(150,200,50), 300, 500)[c(seq(150,200,50), 300, 500) >= max(aqi2$aqi, na.rm=T)]))) +
   #xlim(c(min(aqi$time, na.rm=T), max(aqi$time, na.rm=T))) +
-  scale_x_continuous(breaks = aqi2$time) + 
+  scale_x_continuous(breaks =  aqi2$time) + 
   theme(panel.grid.minor.x = element_blank(), panel.grid.minor.y = element_blank())
 
 print(p)
