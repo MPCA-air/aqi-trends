@@ -11,7 +11,7 @@ max-width: 1500px;
 
     border: 0;
     overflow: hidden; 
-    z-index: -1;
+    z-index: 1;
     
     -ms-transform: scale(0.48);
     -moz-transform: scale(0.48);
