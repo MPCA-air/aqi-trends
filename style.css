@@ -1,30 +1,47 @@
-@font-face {
-	font-family: Open Sans;
-	src: local("Open Sans Light"), local("OpenSans-Light"), url(http://fonts.gstatic.com/s/opensans/v13/DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff) format("woff");
-	font-weight: 300;
-	font-style: normal;
+body .main-container {
+max-width: 1500px;
 }
-@font-face {
-	font-family: Open Sans;
-	src: local("Open Sans"), local("OpenSans"), url(http://fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format("woff");
-	font-weight: 400;
-	font-style: normal;
+
+body {
+max-width: 1500px;
 }
-@font-face {
-	font-family: Open Sans;
-	src: local("Open Sans Semibold"), local("OpenSans-Semibold"), url(http://fonts.gstatic.com/s/opensans/v13/MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff) format("woff");
-	font-weight: 600;
-	font-style: normal;
+
+.signup
+{
+
+    border: 0;
+    overflow: hidden; 
+    z-index: -1;
+    
+    -ms-transform: scale(0.48);
+    -moz-transform: scale(0.48);
+    -o-transform: scale(0.48);
+    -webkit-transform: scale(0.48);
+    transform: scale(0.48);
+
+    -ms-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
 }
-@font-face {
-	font-family: Open Sans;
-	src: local("Open Sans Bold"), local("OpenSans-Bold"), url(http://fonts.gstatic.com/s/opensans/v13/k3k702ZOKiLJc3WVjuplzHhCUOGz7vYGh680lGh-uXM.woff) format("woff");
-	font-weight: 700;
-	font-style: normal;
-}
-@font-face {
-	font-family: Open Sans;
-	src: local("Open Sans Extrabold"), local("OpenSans-Extrabold"), url(http://fonts.gstatic.com/s/opensans/v13/EInbV5DfGHOiMmvb1Xr-hnhCUOGz7vYGh680lGh-uXM.woff) format("woff");
-	font-weight: 800;
-	font-style: normal;
+
+.current
+{
+
+    border: 0;
+    overflow: hidden; 
+    z-index: -2;
+    
+    -ms-transform: scale(0.98);
+    -moz-transform: scale(0.98);
+    -o-transform: scale(0.98);
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+
+    -ms-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
 }
