@@ -3,7 +3,6 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 library(httr)
-#library(animation)
 library(magick)
 
 #require(installr) 
