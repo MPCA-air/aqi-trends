@@ -5,6 +5,8 @@ library(ggplot2)
 library(httr)
 library(magick)
 
+options(warn = -1)
+
 #require(installr) 
 #install.ImageMagick()
 
@@ -15,20 +17,20 @@ setwd("C:/Users/dkvale/Desktop/State Fair 2016/Color chart")
 # Load past AQI values
 
 aqi_test <- read_csv("row, time, time_txt, aqi
-                 1,0,0am, NA
-                 2,23,11pm, 22
-                 3,2,2am, 33
-                 4,3,3am, 28
-                 5,4,4am, 55
-                 6,5,5am, 66
-                 7,6,6am, 58
-                 8,7,7am, 75
-                 9,8,8am, 88
-                 10,9,9am, 99
-                11,10,10am, 95
-                12,11,11am, 108
-                13,12,12pm, 118
-                14,13,1pm, NA")
+                 0,0,0am, NA
+                 1,23,11pm, 22
+                 2,2,2am, 33
+                 3,3,3am, 28
+                 4,4,4am, 55
+                 5,5,5am, 66
+                 6,6,6am, 58
+                 7,7,7am, 75
+                 8,8,8am, 88
+                 9,9,9am, 99
+                10,10,10am, 95
+                11,11,11am, 108
+                12,12,12pm, 118
+                13,13,1pm, NA")
 
 aqi_old <- read_csv("aqi_old.csv")
 
@@ -36,9 +38,6 @@ aqi_old$aqi  <- as.integer(aqi_old$aqi)
 aqi_old$time <- as.integer(aqi_old$time)
 
 # Request data from SmogWatch
-#curl('curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Cache-Control: no-cache" -H "Postman-Token: 4c949d2b-2fc4-33a1-5a4f-3006bba29323" -d 'TheDateID=1&theDate=07/15/2016&ParamID=2&Unit=ug/m3' 
-#     "http://www.smogwatch.com/minn/aqdata.cfm"')
-
 #url <- "http://www.smogwatch.com/minn/aqdata.cfm"
 #body <- list(TheDateID=1, theDate='07/15/2016', ParamID=2, Unit='ug/m3')
 
@@ -57,7 +56,7 @@ new_time <- grepl("Last Updated", aqi_new) %>%
 
 new_time_24 <- as.integer(format(strptime(new_time, "%I:%M %p"), "%H"))
 
-if(new_time_24 > max(aqi_old[!is.na(aqi_old$aqi), ]$time)) {
+if(new_time_24 != aqi_old[13, ]$time) {
 
   twin_cities <- grep("Twin", aqi_new)
   
@@ -85,18 +84,22 @@ if(new_time_24 > max(aqi_old[!is.na(aqi_old$aqi), ]$time)) {
   
   aqi_new$aqi  <- as.integer(aqi_new$aqi)
   aqi_new$time <- as.integer(aqi_new$time)
+  aqi_new$row <- 12
   
   aqi_new <- rbind(aqi_old[-c(1, nrow(aqi_old)), ], aqi_new)
   
   aqi_new[1, ]$aqi <- NA
   
   aqi_new <- rbind(aqi_new, 
-                   data_frame(time = as.integer(format(strptime(new_time, "%I:%M %p")+60*60, "%H")),
+                   data_frame(row      = 13,
+                              time     = as.integer(format(strptime(new_time, "%I:%M %p")+60*60, "%H")),
                               time_txt = "",
-                              aqi = NA))
+                              aqi      = NA))
+  
+  aqi_new$row <- 0:13
   
   write_csv(aqi_new, "aqi_old.csv")
-}
+
   
 # Create background colors
 aqi_refs <- data.frame(xstart = c(seq(0,150,50), 200, 300),
@@ -109,6 +112,8 @@ aqi_refs$col <- factor(aqi_refs$col, ordered = T, levels = aqi_refs$col)
 
 aqi2 <- aqi_new
 
+time_labels <- c("", aqi2$time_txt[-c(1, nrow(aqi2))], "")
+
 setwd("charts")
 
 img_count <- 0
@@ -118,11 +123,11 @@ par(mar=c(0,0,0,0))
 
 for(i in 2:13){
   
-  aqi <- aqi2[2:i, ]
+  aqi <- aqi2[1:i, ]
   
-  aqi_last <- aqi[!is.na(aqi$aqi), ][2:(i-1), ]
+  aqi_last <- aqi2[2:max(c(2, i-1)), ]
   
-  aqi_new <- aqi[i, ]
+  aqi_new <- aqi2[i, ]
   
 for(z in seq(1, 37, 2)) {
   
@@ -130,7 +135,7 @@ for(z in seq(1, 37, 2)) {
   
 p <- ggplot() +
   geom_rect(data = aqi_refs, aes(ymin = xstart, ymax = xend, 
-                                 xmin = min(aqi2$time, na.rm=T), xmax = max(aqi2$time, na.rm=T), 
+                                 xmin = 0, xmax = 13, 
                                  fill = col), alpha = 0.74) 
 
 # Background line
@@ -183,7 +188,7 @@ if(z < 29 && z > 3) {
   p <- p + 
        geom_label(data    = aqi_new,
                   aes(x = row, y = aqi + 30 - 60 * (aqi > 105), label = aqi), 
-                  color   = "grey50", 
+                  color   = "grey40", 
                   size    = 4.2 - 0.047 * abs(27-z), 
                   alpha   = .95 - 0.025 * abs(28-z),
                   family  = c("serif", "mono")[2])
@@ -193,7 +198,7 @@ if(z >= 29 && z < 37) {
   p <- p + 
     geom_label(data    = aqi_new,
                aes(x = row, y = aqi + 30 - 60 * (aqi > 105), label = aqi), 
-               color   = "grey50", 
+               color   = "grey40", 
                size    = 4.2, 
                alpha   = .95,
                family  = c("serif", "mono")[2])
@@ -204,7 +209,7 @@ p <- p +
   guides(fill = "none") +
   scale_fill_manual(values = as.character(aqi_refs$col)) +
   labs(x = NULL, y = NULL, subtitle = "Air Quality Index") +
-  scale_x_continuous(breaks = aqi2$row, labels = c("", aqi2$time_txt[-c(1, nrow(aqi2))], ""), expand = c(0,0)) + 
+  scale_x_continuous(breaks = aqi2$row, labels = time_labels, expand=c(0,0)) + 
   scale_y_continuous(limits=c(0, min(c(seq(150, 200, 50), 300, 500)[c(seq(150, 200, 50), 300, 500) >= max(aqi2$aqi, na.rm=T)])), 
                      expand=c(0,0)) + 
   theme_bw() + 
@@ -213,10 +218,8 @@ p <- p +
         panel.grid.minor= element_blank(), 
         panel.grid.major = element_blank(),
         axis.text.x = element_text(size=7.3),
-        plot.subtitle = element_text(size=9, color="grey40"))
+        plot.subtitle = element_text(size=9, color="grey30"))
   
-#print(p)
-
 p
 
 ggsave(paste0(img_count, ".png"), width=4.7, height=2)
@@ -230,6 +233,8 @@ ggsave(paste0(img_count, ".png"), width=4.7, height=2)
     }
 
 }
+
+
 list.files() %>% 
   .[grepl("png", .)] %>% 
   .[order(as.numeric(sub("([0-9]*).*", "\\1", .)))] %>% 
