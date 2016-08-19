@@ -14,10 +14,10 @@ options(warn = -1)
 
 
 # Load credentials
-credentials <- read_csv("credentials.csv")
+credentials <- read_csv("~/credentials.csv")
 
 
-setwd("~/statefair/colorchart")
+setwd("../")
 
 
 # Load past AQI values
@@ -197,7 +197,7 @@ if(z < 29) p <- p +
 # Fade in white circle
 if(z < 25 && z > 9) { 
   p <- p + 
-       geom_point(data = aqi_new, aes(x = row, y = aqi), color = "white", size = 0.8*(z-10)**0.54, alpha = .81 - 0.03 * abs(24-z)) 
+       geom_point(data = aqi_new, aes(x = row, y = aqi), color = "white", size = 0.8*(z-10)**0.54, alpha = .83 - 0.03 * abs(24-z)) 
 }
 
 
