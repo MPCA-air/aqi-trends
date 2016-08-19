@@ -239,13 +239,13 @@ p <- p +
   
 p
 
-ggsave(paste0(img_count, ".png"), width=4.7, height=2)
+ggsave(paste0(img_count, ".png"), width=3.5, height=1.51)
 
 }
 
   if(i == 13) for(y in 1:5) {
     img_count <- img_count + 1
-    ggsave(paste0(img_count, ".png"), width=4.7, height=2)
+    ggsave(paste0(img_count, ".png"), width=3.5, height=1.51)
 
     }
 
