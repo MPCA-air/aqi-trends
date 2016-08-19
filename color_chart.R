@@ -1,21 +1,26 @@
+#!/usr/bin/env Rscript
 
 library(readr)
 library(dplyr)
 library(ggplot2)
-library(httr)
 library(magick)
+
+#devtools::install_github("hadley/ggplot2")
 
 options(warn = -1)
 
 #require(installr) 
 #install.ImageMagick()
 
-#devtools::install_github("hadley/ggplot2")
 
-setwd("C:/Users/dkvale/Desktop/State Fair 2016/Color chart")
+# Load credentials
+credentials <- read_csv("credentials.csv")
+
+
+setwd("~/statefair/colorchart")
+
 
 # Load past AQI values
-
 aqi_test <- read_csv("row, time, time_txt, aqi
                  0,0,0am, NA
                  1,23,11pm, 22
@@ -60,7 +65,7 @@ if(new_time_24 != aqi_old[13, ]$time) {
 
   twin_cities <- grep("Twin", aqi_new)
   
-  new_value <-  grep("cc_ozone_cell", aqi_new) %>%
+  new_ozone <-  grep("cc_ozone_cell", aqi_new) %>%
                   .[. > twin_cities] %>%
                   aqi_new[.] %>%
                   strsplit(. , ">") %>% 
@@ -68,7 +73,19 @@ if(new_time_24 != aqi_old[13, ]$time) {
                   .[2] %>%
                   gsub("<[///]div", "", .)
   
+  new_pm25 <-  grep("cc_pm_cell", aqi_new) %>%
+                 .[. > twin_cities] %>%
+                 aqi_new[.] %>%
+                 strsplit(. , ">") %>% 
+                 unlist(.) %>% 
+                 .[2] %>%
+                 gsub("<[///]div", "", .)
+  
+  new_value <- max(new_ozone, new_pm25, na.rm=T)
+  
   # Quality check
+  
+  if(!is.na(new_value)) {
   
   ## Set negative values to one
   if(new_value < 1) new_value <- 1
@@ -226,14 +243,13 @@ ggsave(paste0(img_count, ".png"), width=4.7, height=2)
 
 }
 
-  if(i == (max(aqi2$time)-1)) for(y in 1:5) {
+  if(i == 13) for(y in 1:5) {
     img_count <- img_count + 1
     ggsave(paste0(img_count, ".png"), width=4.7, height=2)
 
     }
 
 }
-
 
 list.files() %>% 
   .[grepl("png", .)] %>% 
@@ -245,9 +261,26 @@ list.files() %>%
 
 
 # Push to github
+git <- "cd ~/signup-aqi; git "
 
+system("cp -a ~/State Fair 2016/Color chart/ozone_chart.gif  ~/signup-aqi")
 
-}
+system(paste0(git, "add ."))
+
+commit <- paste0(git, 'commit -a -m ', '"update aqi chart"')
+
+system(commit)
+
+system(paste0(git, "config --global user.name dkvale"))
+system(paste0(git, "config --global user.email ", credentials$email))
+system(paste0(git, "config credential.helper store"))
+
+push <- paste0(git, "push -f origin master")
+#push <- paste0(git, "push -f origin gh-pages")
+
+system(push)
+
+}}
 
 
 # Close
