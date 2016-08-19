@@ -7,6 +7,10 @@ library(magick)
 
 #devtools::install_github("hadley/ggplot2")
 
+# Check time
+#format(Sys.time(), "%H")
+
+
 options(warn = -1)
 
 #require(installr) 
