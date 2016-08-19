@@ -262,26 +262,26 @@ list.files() %>%
 
 
 # Push to github
-git <- "C: & CD C:/Users/dkvale/Desktop/State_Fair_2016/signup-aqi & C:/Users/dkvale/AppData/Local/Programs/Git/bin/git.exe "
+git <- 'C: & CD "C:/Users/dkvale/Desktop/State_Fair_2016/signup-aqi" & "C:/Users/dkvale/AppData/Local/Programs/Git/bin/git.exe" '
 
 
 shell(paste0('C: & copy "C:/Users/dkvale/Desktop/State_Fair_2016/Color_chart/charts/ozone_chart.gif" ',
              '"C:/Users/dkvale/Desktop/State_Fair_2016/signup-aqi/ozone_chart.gif"'))
 
-system(paste0(git, "add ."))
+shell(paste0(git, "add ozone_chart.gif"))
 
 commit <- paste0(git, 'commit -a -m ', '"update aqi chart"')
 
-system(commit)
+shell(commit)
 
-system(paste0(git, "config --global user.name dkvale"))
-system(paste0(git, "config --global user.email ", credentials$email))
-system(paste0(git, "config credential.helper store"))
+shell(paste0(git, "config --global user.name dkvale"))
+shell(paste0(git, "config --global user.email ", credentials$email))
+shell(paste0(git, "config credential.helper store"))
 
 push <- paste0(git, "push -f origin master")
 #push <- paste0(git, "push -f origin gh-pages")
 
-system(push)
+shell(push)
 
 }}
 
