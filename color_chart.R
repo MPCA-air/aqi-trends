@@ -61,7 +61,7 @@ new_time <- grepl("Last Updated", aqi_new) %>%
 
 new_time_24 <- as.integer(format(strptime(new_time, "%I:%M %p"), "%H"))
 
-if(new_time_24 == aqi_old[13, ]$time) {
+if(new_time_24 != aqi_old[13, ]$time) {
 
   twin_cities <- grep("Twin", aqi_new)
   
