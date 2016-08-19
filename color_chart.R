@@ -234,24 +234,25 @@ p <- p +
         panel.background = element_blank(),
         panel.grid.minor= element_blank(), 
         panel.grid.major = element_blank(),
-        axis.text.x = element_text(size=7.3),
-        plot.subtitle = element_text(size=9, color="grey30"))
+        axis.text.y = element_text(size=7),
+        axis.text.x = element_text(size=5),
+        plot.subtitle = element_text(size=8, color="grey30"))
   
 p
 
-ggsave(paste0(img_count, ".png"), width=3.5, height=1.51)
+ggsave(paste0(img_count, ".png"), width=2.94, height=1.25)
 
 }
 
   if(i == 13) for(y in 1:5) {
     img_count <- img_count + 1
-    ggsave(paste0(img_count, ".png"), width=3.5, height=1.51)
+    ggsave(paste0(img_count, ".png"), width=2.94, height=1.25)
 
     }
 
 }
 
-list.files() %>% 
+list.files()[1:200] %>% 
   .[grepl("png", .)] %>% 
   .[order(as.numeric(sub("([0-9]*).*", "\\1", .)))] %>% 
   image_read() %>%
@@ -261,7 +262,7 @@ list.files() %>%
 
 
 # Push to github
-git <- "cd ~/signup-aqi; git "
+git <- "cd ~/statefair/colorchart/signup-aqi; git "
 
 system("cp -a ~/State Fair 2016/Color chart/ozone_chart.gif  ~/signup-aqi")
 
