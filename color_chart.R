@@ -265,7 +265,10 @@ list.files() %>%
   image_write("ozone_chart.gif")
 
 
-# Push to github
+# Push to github if afer 7am and before 10pm
+
+if(new_time_24 < 22 && new_time_24 > 6) {
+  
 git <- 'C: & CD "C:/Users/dkvale/Desktop/State_Fair_2016/signup-aqi" & "C:/Users/dkvale/AppData/Local/Programs/Git/bin/git.exe" '
 
 
@@ -286,6 +289,7 @@ push <- paste0(git, "push -f origin master")
 #push <- paste0(git, "push -f origin gh-pages")
 
 shell(push)
+}
 
 }}
 
