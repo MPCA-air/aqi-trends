@@ -16,7 +16,7 @@ options(warn = -1)
 #require(installr) 
 #install.ImageMagick()
 
-size_adjust <- 0.67
+size_adjust <- 0.63
 
 # Load credentials
 credentials <- read_csv("C:/Users/dkvale/Desktop/credentials.csv")
@@ -252,14 +252,14 @@ p <- p +
 p
 
 #ggsave(paste0(img_count, ".png"), width=4, height=1.7)
-ggsave(paste0(img_count, ".png"), width=4, height=0.85)
+ggsave(paste0(img_count, ".png"), width=4, height=0.75)
 
 }
 
   if(i == 13) for(y in 1:5) {
     img_count <- img_count + 1
     #ggsave(paste0(img_count, ".png"), width=4, height=1.7)
-    ggsave(paste0(img_count, ".png"), width=4, height=0.85) 
+    ggsave(paste0(img_count, ".png"), width=4, height=0.75) 
     }
 
 }
