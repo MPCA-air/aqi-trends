@@ -16,6 +16,7 @@ options(warn = -1)
 #require(installr) 
 #install.ImageMagick()
 
+size_adjust <- 0.67
 
 # Load credentials
 credentials <- read_csv("C:/Users/dkvale/Desktop/credentials.csv")
@@ -164,47 +165,47 @@ p <- ggplot() +
 
 # Background line
 p <- p + 
-  geom_line(data = aqi2[!is.na(aqi2$aqi), ], aes(x = row, y = aqi), size =1.1, color="grey40", alpha = 0.08) +
+  geom_line(data = aqi2[!is.na(aqi2$aqi), ], aes(x = row, y = aqi), size =1.1*size_adjust, color="grey40", alpha = 0.08) +
   #geom_line(data = aqi2[!is.na(aqi2$aqi), ], aes(x = time, y = aqi), size =1, color="grey50", alpha = 0.07) +
   #geom_point(data = aqi2, aes(x = time, y = aqi), color = "grey50", size = 5.7,, alpha = 0.09) +
-  geom_point(data = aqi2[!is.na(aqi2$aqi), ], aes(x = row, y = aqi), color = "grey40",  size = 4, alpha = 0.06)
+  geom_point(data = aqi2[!is.na(aqi2$aqi), ], aes(x = row, y = aqi), color = "grey40",  size = 4*size_adjust, alpha = 0.06)
 
 
 
 # Connecting lines
 if(z < 25 && nrow(aqi) > 1) {
   p <- p + 
-       geom_line(data = aqi_last, aes(x = row, y = aqi * .996), size =1.1, color="grey20", alpha = 0.15) +
-       geom_line(data = aqi_last, aes(x = row, y = aqi), size =1, color="grey40", alpha = 0.65)
+       geom_line(data = aqi_last, aes(x = row, y = aqi * .996), size =1.1*size_adjust, color="grey20", alpha = 0.15) +
+       geom_line(data = aqi_last, aes(x = row, y = aqi), size =1*size_adjust, color="grey40", alpha = 0.65)
 }  
 
 if(z >= 25 && nrow(aqi) > 1) {
     p <- p + 
-      geom_line(data = aqi, aes(x = row, y = aqi * .996), size =1.1, color="grey20", alpha = 0.15) +
-      geom_line(data = aqi, aes(x = row, y = aqi), size =1, color="grey40", alpha = 0.65) 
+      geom_line(data = aqi, aes(x = row, y = aqi * .996), size =1.1*size_adjust, color="grey20", alpha = 0.15) +
+      geom_line(data = aqi, aes(x = row, y = aqi), size =1*size_adjust, color="grey40", alpha = 0.65) 
 }  
   
 
 # Previous points
 p <- p + 
-    geom_point(data = aqi_last, aes(x = row, y = aqi), color = "grey50", size = 4.5) +
-    geom_point(data = aqi_last, aes(x = row, y = aqi), color = "white", size = 4)
+    geom_point(data = aqi_last, aes(x = row, y = aqi), color = "grey50", size = 4.5*size_adjust) +
+    geom_point(data = aqi_last, aes(x = row, y = aqi), color = "white", size = 4*size_adjust)
 
 # New point
 if(z >= 25) {
   p <- p + 
-    geom_point(data = aqi_new, aes(x = row, y = aqi), color = "grey50", size = 4.5, alpha = .8) +
-    geom_point(data = aqi_new, aes(x = row, y = aqi), color = "white", size = 4, alpha = .8) 
+    geom_point(data = aqi_new, aes(x = row, y = aqi), color = "grey50", size = 4.5*size_adjust, alpha = .8) +
+    geom_point(data = aqi_new, aes(x = row, y = aqi), color = "white", size = 4*size_adjust, alpha = .8) 
 }
 
 # Ripple effect
 if(z < 29) p <- p + 
-                geom_point(data = aqi_new, aes(x = row, y = aqi), color = "grey50", size = 0.8*z**0.81, alpha = 0.15 + 0.025 * abs(27-z), pch=21) 
+                geom_point(data = aqi_new, aes(x = row, y = aqi), color = "grey50", size = 0.8*z**0.81*size_adjust, alpha = 0.15 + 0.025 * abs(27-z), pch=21) 
 
 # Fade in white circle
 if(z < 25 && z > 9) { 
   p <- p + 
-       geom_point(data = aqi_new, aes(x = row, y = aqi), color = "white", size = 0.8*(z-10)**0.54, alpha = .83 - 0.03 * abs(24-z)) 
+       geom_point(data = aqi_new, aes(x = row, y = aqi), color = "white", size = 0.8*(z-10)**0.54 *size_adjust, alpha = .83 - 0.03 * abs(24-z)) 
 }
 
 
@@ -213,7 +214,7 @@ if(z < 29 && z > 3) {
        geom_label(data    = aqi_new,
                   aes(x = row, y = aqi + 30 - 60 * (aqi > 105), label = aqi), 
                   color   = "grey40", 
-                  size    = 4.2 - 0.047 * abs(27-z), 
+                  size    = size_adjust * 4.2 - 0.047 * abs(27-z), 
                   alpha   = .95 - 0.025 * abs(28-z),
                   family  = c("serif", "mono")[2])
 }
@@ -223,7 +224,7 @@ if(z >= 29 && z < 37) {
     geom_label(data    = aqi_new,
                aes(x = row, y = aqi + 30 - 60 * (aqi > 105), label = aqi), 
                color   = "grey40", 
-               size    = 4.2, 
+               size    = 4.2 * size_adjust, 
                alpha   = .95,
                family  = c("serif", "mono")[2])
 }
@@ -232,7 +233,8 @@ if(z >= 29 && z < 37) {
 p <- p +
   guides(fill = "none") +
   scale_fill_manual(values = as.character(aqi_refs$col)) +
-  labs(x = NULL, y = NULL, subtitle = "Air Quality Index") +
+  labs(x = NULL, y = NULL) + 
+  #labs(subtitle = "Air Quality Index") +
   scale_x_continuous(breaks = aqi2$row, labels = time_labels, expand=c(0,0)) + 
   scale_y_continuous(limits=c(0, min(c(seq(150, 200, 50), 300, 500)[c(seq(150, 200, 50), 300, 500) >= max(aqi2$aqi, na.rm=T)])), 
                      expand=c(0,0)) + 
@@ -241,9 +243,9 @@ p <- p +
         panel.background = element_blank(),
         panel.grid.minor= element_blank(), 
         panel.grid.major = element_blank(),
-        axis.text.y = element_text(size=7.5),
-        axis.text.x = element_text(size=6),
-        plot.subtitle = element_text(size=6.2, color="grey30"))
+        axis.text.y = element_text(size=7.5*size_adjust*1.3),
+        axis.text.x = element_text(size=6*size_adjust*1.3),
+        plot.subtitle = element_text(size=8.2*size_adjust, color="grey30"))
   
 p
 
