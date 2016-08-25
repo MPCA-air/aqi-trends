@@ -243,18 +243,19 @@ p <- p +
         panel.grid.major = element_blank(),
         axis.text.y = element_text(size=7.5),
         axis.text.x = element_text(size=6),
-        plot.subtitle = element_text(size=8.2, color="grey30"))
+        plot.subtitle = element_text(size=6.2, color="grey30"))
   
 p
 
-ggsave(paste0(img_count, ".png"), width=4, height=1.7)
+#ggsave(paste0(img_count, ".png"), width=4, height=1.7)
+ggsave(paste0(img_count, ".png"), width=4, height=1)
 
 }
 
   if(i == 13) for(y in 1:5) {
     img_count <- img_count + 1
-    ggsave(paste0(img_count, ".png"), width=4, height=1.7)
-
+    #ggsave(paste0(img_count, ".png"), width=4, height=1.7)
+    ggsave(paste0(img_count, ".png"), width=4, height=1) 
     }
 
 }
