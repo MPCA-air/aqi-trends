@@ -244,20 +244,21 @@ p <- p +
         panel.grid.minor= element_blank(), 
         panel.grid.major = element_blank(),
         axis.text.y = element_text(size=7.5*size_adjust*1.3),
-        axis.text.x = element_text(size=6*size_adjust*1.3),
-        plot.subtitle = element_text(size=8.2*size_adjust, color="grey30"))
+        axis.text.x = element_text(size=6*size_adjust*1.25),
+        plot.subtitle = element_text(size=8.2*size_adjust, color="grey30"),
+        axis.ticks = element_line(size = 0.25))
   
 p
 
 #ggsave(paste0(img_count, ".png"), width=4, height=1.7)
-ggsave(paste0(img_count, ".png"), width=4, height=1)
+ggsave(paste0(img_count, ".png"), width=4, height=0.9)
 
 }
 
   if(i == 13) for(y in 1:5) {
     img_count <- img_count + 1
     #ggsave(paste0(img_count, ".png"), width=4, height=1.7)
-    ggsave(paste0(img_count, ".png"), width=4, height=1) 
+    ggsave(paste0(img_count, ".png"), width=4, height=0.9) 
     }
 
 }
