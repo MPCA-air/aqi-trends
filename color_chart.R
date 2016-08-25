@@ -247,7 +247,7 @@ p <- p +
         axis.text.x = element_text(size=6*size_adjust*1.25),
         plot.subtitle = element_text(size=8.2*size_adjust, color="grey30"),
         axis.ticks = element_line(size = 0.25),
-        axis.ticks.length = unit(.02, "cm"))
+        axis.ticks.length = unit(.04, "cm"))
   
 p
 
@@ -259,7 +259,7 @@ ggsave(paste0(img_count, ".png"), width=4, height=0.85)
   if(i == 13) for(y in 1:5) {
     img_count <- img_count + 1
     #ggsave(paste0(img_count, ".png"), width=4, height=1.7)
-    ggsave(paste0(img_count, ".png"), width=4, height=0.9) 
+    ggsave(paste0(img_count, ".png"), width=4, height=0.85) 
     }
 
 }
