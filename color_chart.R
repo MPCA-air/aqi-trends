@@ -141,6 +141,9 @@ time_labels <- c("", aqi2$time_txt[-c(1, nrow(aqi2))], "")
 
 setwd("charts")
 
+# Empty chart folder
+shell("C: & ")
+
 img_count <- 0
 
 par(mar=c(0,0,0,0))
