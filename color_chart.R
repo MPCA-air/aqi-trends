@@ -75,7 +75,9 @@ if(new_time_24 != aqi_old[13, ]$time) {
                   strsplit(. , ">") %>% 
                   unlist(.) %>% 
                   .[2] %>%
-                  gsub("<[///]div", "", .)
+                  gsub("<[///]div", "", .) %>%
+                  as.numeric()
+  
   
   new_pm25 <-  grep("cc_pm_cell", aqi_new) %>%
                  .[. > twin_cities] %>%
@@ -83,7 +85,8 @@ if(new_time_24 != aqi_old[13, ]$time) {
                  strsplit(. , ">") %>% 
                  unlist(.) %>% 
                  .[2] %>%
-                 gsub("<[///]div", "", .)
+                 gsub("<[///]div", "", .) %>%
+                 as.numeric()
   
   new_value <- max(new_ozone, new_pm25, na.rm=T)
   
