@@ -142,7 +142,7 @@ time_labels <- c("", aqi2$time_txt[-c(1, nrow(aqi2))], "")
 setwd("charts")
 
 # Empty chart folder
-shell("C: & ")
+shell("C: & CD C:/Users/dkvale/Desktop/State_Fair_2016/Color_chart/charts/ & del /F /Q *")
 
 img_count <- 0
 
@@ -215,7 +215,7 @@ if(z < 25 && z > 9) {
 if(z < 29 && z > 3) { 
   p <- p + 
        geom_label(data    = aqi_new,
-                  aes(x = row, y = aqi + 30 - 60 * (aqi > 105), label = aqi), 
+                  aes(x = row, y = aqi + 35 - 70 * (aqi > 105), label = aqi), 
                   color   = "grey40", 
                   size    = size_adjust * 4.2 - 0.047 * abs(27-z), 
                   alpha   = .95 - 0.025 * abs(28-z),
@@ -225,7 +225,7 @@ if(z < 29 && z > 3) {
 if(z >= 29 && z < 37) { 
   p <- p + 
     geom_label(data    = aqi_new,
-               aes(x = row, y = aqi + 30 - 60 * (aqi > 105), label = aqi), 
+               aes(x = row, y = aqi + 35 - 70 * (aqi > 105), label = aqi), 
                color   = "grey40", 
                size    = 4.2 * size_adjust, 
                alpha   = .95,
