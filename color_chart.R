@@ -255,14 +255,14 @@ p <- p +
 p
 
 #ggsave(paste0(img_count, ".png"), width=4, height=1.7)
-ggsave(paste0(img_count, ".png"), width=4, height=0.75)
+ggsave(paste0(img_count, ".png"), width=4, height=0.82)
 
 }
 
   if(i == 13) for(y in 1:5) {
     img_count <- img_count + 1
     #ggsave(paste0(img_count, ".png"), width=4, height=1.7)
-    ggsave(paste0(img_count, ".png"), width=4, height=0.75) 
+    ggsave(paste0(img_count, ".png"), width=4, height=0.82) 
     }
 
 }
