@@ -151,7 +151,7 @@ par(mar=c(0,0,0,0))
 
 for(i in 2:13){
   
-  aqi <- aqi2[1:i, ]
+  aqi_cut <- aqi2[1:i, ]
   
   aqi_last <- aqi2[2:max(c(2, i-1)), ]
   
@@ -176,16 +176,16 @@ p <- p +
 
 
 # Connecting lines
-if(z < 25 && nrow(aqi) > 1) {
+if(z < 25 && nrow(aqi_cut) > 1) {
   p <- p + 
        geom_line(data = aqi_last, aes(x = row, y = aqi * .996), size =1.1*size_adjust, color="grey20", alpha = 0.15) +
        geom_line(data = aqi_last, aes(x = row, y = aqi), size =1*size_adjust, color="grey40", alpha = 0.65)
 }  
 
-if(z >= 25 && nrow(aqi) > 1) {
+if(z >= 25 && nrow(aqi_cut) > 1) {
     p <- p + 
-      geom_line(data = aqi, aes(x = row, y = aqi * .996), size =1.1*size_adjust, color="grey20", alpha = 0.15) +
-      geom_line(data = aqi, aes(x = row, y = aqi), size =1*size_adjust, color="grey40", alpha = 0.65) 
+      geom_line(data = aqi_cut, aes(x = row, y = aqi * .996), size =1.1*size_adjust, color="grey20", alpha = 0.15) +
+      geom_line(data = aqi_cut, aes(x = row, y = aqi), size =1*size_adjust, color="grey40", alpha = 0.65) 
 }  
   
 
