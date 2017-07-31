@@ -1,2 +1,2 @@
-# signup-aqi
-Signup page for Air Quality alerts 
+# aqi-trends
+Creates animated AQI charts in R
