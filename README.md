@@ -2,4 +2,4 @@
 
 Create animated AQI charts in R
 
-![aqi trends]("ozone_chart.gif")
+![aqi trends](ozone_chart.gif)
