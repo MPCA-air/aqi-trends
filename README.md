@@ -1,2 +1,5 @@
 # aqi-trends
-Creates animated AQI charts in R
+
+Create animated AQI charts in R
+
+![aqi trends]("ozone_chart.gif")
